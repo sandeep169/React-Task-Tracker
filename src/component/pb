@@ -1,0 +1,53 @@
+if(fields.category == ''){
+      alert("you have not opt Category, Please Select Category");
+      return;
+    }
+    if(fields.subcategory == ''){
+      alert("you have not opt SubCategory, Please Select Subcategory");
+      return;
+    }
+    if(fields.partName == ''){
+      alert("you have not opt Product Name, Please Select Product Name ");
+      return;
+    }
+    if(fields.manufacturer_id == ''){
+      alert("current stock field please enter manufacturer_id");
+      return;
+    }
+    
+    if (fields.list_price != '') {
+      let price = fields.list_price;
+      price = price.trim().replaceAll('$', '');
+      formData.store_inventory.list_price = parseFloat(price);
+    }
+    else {
+      console.log("price field empty");
+      alert("please fill the price field....");
+      return;
+    }
+    if(fields.weight == ''){
+        console.log("Product Weight(lbs) field is empty ");
+        alert("please fill the Product Weight(lbs) field");
+        return;
+    }
+
+    if(fields.warranty_in_months == ''){
+      console.log("warranty details field is empty ");
+      alert("please fill the warranty details  field");
+      return;
+    }
+    if(fields.unitPrice == ''){
+      console.log("unit price is empty");
+      alert('please enter the unit price');
+      return;
+    }
+    if(fields.vBrand == ''){
+      alert("current stock field please enter vBrand");
+    }
+    if(fields.vModel == ''){
+      alert("current stock field please enter vModel");
+    }
+    if(fields.vYears == ''){
+      alert("current stock field please enter vYears");
+    }
+    
