@@ -1,6 +1,7 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is build to learn the react functionality and implment react code
+this project include a react task tracker , a notification page with toggle 
+you can change the index page to run the diffrent components
 
 ## Available Scripts
 
