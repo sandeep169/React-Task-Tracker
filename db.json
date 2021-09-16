@@ -1,16 +1,38 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "text": "Food Shopping",
-      "day": "Feb 5th at 1:30pm",
-      "reminder": false
-    },
-    {
       "id": 3,
       "text": "Food Shopping 3",
       "day": "Feb 5th at 2:30pm",
-      "reminder": false
+      "reminder": true
+    },
+    {
+      "text": "test task",
+      "day": "day & time",
+      "reminder": true,
+      "id": 4
     }
-  ]
+  ],
+  "notification": [
+    {
+      "id": 1,
+      "name": "test_notification_with_array_data",
+      "allEmail": true,
+      "review":true,
+      "emailInventoryUpdate": false,
+      "emailCustomerReviewsRatingUpdate": true,
+      "organizationUpdate": false,
+      "shippingUpdate": true
+    }
+  ],
+  "jsonNotification":{
+    "id": 1,
+    "name": "test_json_notification_without_array_data",
+    "allEmail": true,
+    "review":true,
+    "emailInventoryUpdate": false,
+    "emailCustomerReviewsRatingUpdate": true,
+    "organizationUpdate": false,
+    "shippingUpdate": true
+  }
 }

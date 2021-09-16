@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+// import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Notification from './Notification';
+import FetchNotificationApi from './component/FetchNotificationApi';
+// import TaskMasterApi from './component/TaskMasterApi';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    
+    {/* <App /> */}
+    <Notification/>
+    {/* <TaskMasterApi /> */}
+    {/* <FetchNotificationApi/> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

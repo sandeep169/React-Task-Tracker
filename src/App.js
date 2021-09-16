@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Header from './component/Header';
 import Tasks from './component/Tasks';
 import AddTask from './component/AddTask';
-import Example from './Example';
+// import Example from './Example';
 
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +21,7 @@ function App() {
       setTasks(tasksFromServer);
     }
     getTasks();
+    console.log(tasks);
   }, []);
 
   //fetch taks data 
