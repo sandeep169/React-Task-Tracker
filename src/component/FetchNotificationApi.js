@@ -7,7 +7,7 @@ export default function FetchNotificationApi(id) {
         review:false,
         name:""
     })
-    const [userData, setUserData] = useState();
+    // const [userData, setUserData] = useState();
     const toggleNotification = async () => {
         const res = await fetch('http://localhost:5000/jsonNotification');
         const data = await res.json();

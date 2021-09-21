@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-const NotificationPreferenceComponent = (id) => {
-    // const url = "users/(user_id)/user_app_preferences";
+
+const oldNotificationPreferenceComponent = (id) => {
+
     const [notification, setNotification] = useState({
         allNotification: false,
         shippingUpdate: true,
@@ -9,63 +10,199 @@ const NotificationPreferenceComponent = (id) => {
         emailReviewsUpdate: true,
         organizationUpdate: true,
         emailInventoryUpdate: true,
-
     });
+    const fetchNotfication = async (id) => {
+        const res = fetch(`http://localhost:5000/tasks/${id}`);
+        const data = (await res).json();
+        // const data = await res.json();
+        // console.log(data);
+        return data;
+    }
 
+    const toggleNotification = async (id) => {
+        // console.log(id);
+        const taskToToggle = await fetchNotfication(id)
+        const updatedTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
+        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(updatedTask)
+        })
+        const data = await res.json();
+        // setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: data.reminder } : task))
+    }
+    const toggleNotification = async () =>{
+        const toggle = await fetchNotfication();
+        const updateNOtfication = {...notification,}
+        const res = await fetch(`http://localhost:5000/user_preference`,{
+            method:'PUT',
+            headers:{
+                'Content-type': 'application/json'
+            },
+            body:JSON.stringify(updateNOtfication)
+        })
+        const data = await res.json();
+        setNotification
+    }
     useEffect(() => {
         const fetchNotification = async () => {
             try {
                 const res = await fetch("http://localhost:5000/user_preference");
                 const data = await res.json();
                 let obj = {
-                    shippingUpdate: data.data[0].preferences["shipping-update"],
                     emailOrderUpdate: data.data[0].preferences["email-order-update"],
+                    emailInventoryUpdate: data.data[0].preferences["email-inventory-update"],
                     emailReviewsUpdate: data.data[0].preferences["email-reviews-update"],
                     organizationUpdate: data.data[0].preferences["organization-update"],
-                    emailInventoryUpdate: data.data[0].preferences["email-inventory-update"],
+                    shippingUpdate: data.data[0].preferences["shipping-update"],
                 }
-                console.log(data);
-                console.log(data.data[0]);
+                console.log(obj);
+                const x = true;
+                let d = Object.values(obj);
+                d.forEach(element => {
+                    let d_size = d.length;
+                    if (element === true) {
+                     d_size = --d_size;  
+                        console.log(d_size)
+                        if (d_size === 0) {
+                            setNotification({ ...notification, ...obj,allNotification:true});
+                        }
+                        else {
+                            setNotification({ ...notification, ...obj});
+                        }
+                    }
+                });
 
-                setNotification({ ...notification, ...obj });
+                // if (x===Object.keys(obj).forEach((key)=>{
+                //     return key;
+                // })){
+                //     console.log("got true");
+                // }
+                //overridong values or updating
                 //iterating over keys 
                 // Object.keys(data.data[0].preferences).forEach(key=>console.log(key));
                 // console.log(data);
 
             } catch (error) {
-                console.log(error);
+                console.log("error occured :", error);
             }
         }
         fetchNotification();
     }, [id])
 
-
     useEffect(() => {
         if (notification.allNotification) {
             setNotification({
                 ...notification,
-                shippingUpdate: notification.allNotification,
                 emailOrderUpdate: notification.allNotification,
+                emailInventoryUpdate: notification.allNotification,
                 emailReviewsUpdate: notification.allNotification,
                 organizationUpdate: notification.allNotification,
-                emailInventoryUpdate: notification.allNotification,                
+                shippingUpdate: notification.allNotification
             })
         }
         else {
             setNotification({
                 ...notification,
                 allNotification: false,
-                shippingUpdate: false,
                 emailOrderUpdate: false,
+                emailInventoryUpdate: false,
                 emailReviewsUpdate: false,
                 organizationUpdate: false,
-                emailInventoryUpdate: false,
+                shippingUpdate: false,
             })
         }
 
     }, [notification.allNotification])
 
 
+    //version 2 code
+    // if(false)
+    // {    
+    //     const [notification, setNotification] = useState({
+    //         allNotification: false,
+    //         emailOlderUpdate: false,
+    //         emailInventoryUpdate: true,
+    //         emailCustomerReviewsRatingUpdate: false,
+    //         organizationUpdate: true,
+    //         shippingUpdate: true,
+    //     });
+    //     const url="";
+    //     useEffect(() => {
+    //         const fetchNotification = async () => {
+    //             try {
+    //                 const res = await fetch('http://localhost:5000/notification');
+    //                 // const res = await fetch(`/6/user_app_preferences.json`);
+    //                 // const res = await fetch(url);
+    //                 const data = await res.json();
+    //                 //passing the object of notificaton not whole json data
+
+    //                 console.log("data[0].allNotification ", data[0].allNotification)
+    //                 // setNotification(data[0])
+    //             } catch (error) {
+    //                 console.log(error)
+    //             }
+    //         }
+    //         fetchNotification();
+    //     },[id])
+
+    //     useEffect(() => {
+    //         if (notification.allNotification) {
+    //             setNotification({
+    //                 ...notification,
+    //                 emailOlderUpdate: notification.allNotification,
+    //                 emailInventoryUpdate: notification.allNotification,
+    //                 emailCustomerReviewsRatingUpdate: notification.allNotification,
+    //                 organizationUpdate: notification.allNotification,
+    //                 shippingUpdate: notification.allNotification
+    //             })
+    //         }
+    //         else {
+    //             setNotification({
+    //                 allNotification: false,
+    //                 emailOlderUpdate: false,
+    //                 emailInventoryUpdate: false,
+    //                 emailCustomerReviewsRatingUpdate: false,
+    //                 organizationUpdate: false,
+    //                 shippingUpdate: false,
+    //             })
+    //         }
+
+    //     }, [notification.allNotification]);
+    //     }
+    //old code 
+    if (false) {
+        const toggleNotification = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/notification');
+                const data = await res.json();
+                //passing the object of notificaton not whole json data
+                console.log("data[0].allNotification ", data[0].allNotification)
+                setNotification(data[0])
+                // if (data[0].allNotification === true) {
+                //     console.log("in all email true")
+                //     // setNotification(true)
+                //     setNotification({
+                //         allNotification: true,
+                //         emailOlderUpdate: true,
+                //         emailInventoryUpdate: true,
+                //         emailCustomerReviewsRatingUpdate: true,
+                //         organizationUpdate: true,
+                //         shippingUpdate: true,
+                //     })
+                // }
+                // else {
+                //     console.log("in all email else part")
+                //     setNotification(data[0]);
+                // }
+                // setNotification(data[0]);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
     return (
         <>
             <div className="row">
@@ -82,6 +219,7 @@ const NotificationPreferenceComponent = (id) => {
                                         value={notification.allNotification}
                                         checked={notification.allNotification}
                                         onChange={(e) => setNotification({ ...notification, allNotification: e.target.checked })}
+                                        // onChange={(e) => toggleNotification}
 
                                     />
                                     <label
@@ -198,4 +336,4 @@ const NotificationPreferenceComponent = (id) => {
         </>
     )
 }
-export default NotificationPreferenceComponent;
+export default oldNotificationPreferenceComponent;

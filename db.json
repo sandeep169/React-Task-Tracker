@@ -1,10 +1,35 @@
 {
+  "user_preference": {
+    "status": "SUCCESS",
+    "message": "data fetched",
+    "data": [
+      {
+        "preferences": {
+          "shipping-update": true,
+          "email-order-update": true,
+          "organization-update": false,
+          "email-reviews-update": true,
+          "email-inventory-update": false
+        }
+      }
+    ]
+  },
+  "user_app_preference": {
+    "user_id": 6,
+    "preferences": {
+      "shipping-update": true,
+      "email-order-update": true,
+      "organization-update": false,
+      "email-reviews-update": true,
+      "email-inventory-update": false
+    }
+  },
   "tasks": [
     {
       "id": 3,
       "text": "Food Shopping 3",
       "day": "Feb 5th at 2:30pm",
-      "reminder": true
+      "reminder": false
     },
     {
       "text": "test task",
@@ -17,19 +42,19 @@
     {
       "id": 1,
       "name": "test_notification_with_array_data",
-      "allEmail": true,
-      "review":true,
+      "allNotification": false,
+      "emailOlderUpdate": true,
       "emailInventoryUpdate": false,
       "emailCustomerReviewsRatingUpdate": true,
       "organizationUpdate": false,
-      "shippingUpdate": true
+      "shippingUpdate": false
     }
   ],
-  "jsonNotification":{
+  "jsonNotification": {
     "id": 1,
     "name": "test_json_notification_without_array_data",
-    "allEmail": true,
-    "review":true,
+    "allNotification": true,
+    "emailOlderUpdate": true,
     "emailInventoryUpdate": false,
     "emailCustomerReviewsRatingUpdate": true,
     "organizationUpdate": false,

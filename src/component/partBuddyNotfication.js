@@ -1,73 +1,57 @@
 import React, { useEffect, useState } from 'react'
 
+
 const NotificationPreferenceComponent = (id) => {
-    // const url = "users/(user_id)/user_app_preferences";
+    const url = "";
     const [notification, setNotification] = useState({
         allNotification: false,
-        shippingUpdate: true,
-        emailOrderUpdate: true,
-        emailReviewsUpdate: true,
-        organizationUpdate: true,
+        emailOlderUpdate: false,
         emailInventoryUpdate: true,
-
+        emailCustomerReviewsRatingUpdate: false,
+        organizationUpdate: true,
+        shippingUpdate: true,
     });
-
     useEffect(() => {
         const fetchNotification = async () => {
             try {
-                const res = await fetch("http://localhost:5000/user_preference");
+                const res = await fetch(url);
                 const data = await res.json();
-                let obj = {
-                    shippingUpdate: data.data[0].preferences["shipping-update"],
-                    emailOrderUpdate: data.data[0].preferences["email-order-update"],
-                    emailReviewsUpdate: data.data[0].preferences["email-reviews-update"],
-                    organizationUpdate: data.data[0].preferences["organization-update"],
-                    emailInventoryUpdate: data.data[0].preferences["email-inventory-update"],
-                }
-                console.log(data);
-                console.log(data.data[0]);
-
-                setNotification({ ...notification, ...obj });
-                //iterating over keys 
-                // Object.keys(data.data[0].preferences).forEach(key=>console.log(key));
-                // console.log(data);
-
-            } catch (error) {
-                console.log(error);
+                console.log("data[0].allNotification ", data[0].allNotification)
+                setNotification(data[0])
+            } catch(error) {
+                console.log(error)
             }
         }
         fetchNotification();
-    }, [id])
-
+    },[id])
 
     useEffect(() => {
         if (notification.allNotification) {
             setNotification({
                 ...notification,
-                shippingUpdate: notification.allNotification,
-                emailOrderUpdate: notification.allNotification,
-                emailReviewsUpdate: notification.allNotification,
+                emailOlderUpdate: notification.allNotification,
+                emailInventoryUpdate: notification.allNotification,
+                emailCustomerReviewsRatingUpdate: notification.allNotification,
                 organizationUpdate: notification.allNotification,
-                emailInventoryUpdate: notification.allNotification,                
+                shippingUpdate: notification.allNotification
             })
         }
         else {
             setNotification({
-                ...notification,
                 allNotification: false,
-                shippingUpdate: false,
-                emailOrderUpdate: false,
-                emailReviewsUpdate: false,
-                organizationUpdate: false,
+                emailOlderUpdate: false,
                 emailInventoryUpdate: false,
+                emailCustomerReviewsRatingUpdate: false,
+                organizationUpdate: false,
+                shippingUpdate: false,
             })
         }
 
-    }, [notification.allNotification])
-
+    },[notification.allNotification])
 
     return (
         <>
+            {/* <button onClick={toggleNotification}>fetchNotification api</button> */}
             <div className="row">
                 <div className="col">
                     <ul className="notification-itemlist">
@@ -102,9 +86,9 @@ const NotificationPreferenceComponent = (id) => {
                                                 type="checkbox"
                                                 className="custom-control-input"
                                                 id="customSwitch2-1"
-                                                value={notification.emailOrderUpdate}
-                                                checked={notification.emailOrderUpdate}
-                                                onChange={(e) => setNotification({ ...notification, emailOrderUpdate: e.target.checked })}
+                                                value={notification.emailOlderUpdate}
+                                                checked={notification.emailOlderUpdate}
+                                                onChange={(e) => setNotification({ ...notification, emailOlderUpdate: e.target.checked })}
                                             />
                                             <label
                                                 className="custom-control-label"
@@ -141,9 +125,9 @@ const NotificationPreferenceComponent = (id) => {
                                                 type="checkbox"
                                                 className="custom-control-input"
                                                 id="customSwitch2-3"
-                                                value={notification.emailReviewsUpdate}
-                                                checked={notification.emailReviewsUpdate}
-                                                onChange={(e) => setNotification({ ...notification, emailReviewsUpdate: e.target.checked })}
+                                                value={notification.emailCustomerReviewsRatingUpdate}
+                                                checked={notification.emailCustomerReviewsRatingUpdate}
+                                                onChange={(e) => setNotification({ ...notification, emailCustomerReviewsRatingUpdate: e.target.checked })}
                                             />
                                             <label
                                                 className="custom-control-label"
@@ -198,4 +182,4 @@ const NotificationPreferenceComponent = (id) => {
         </>
     )
 }
-export default NotificationPreferenceComponent;
+export default NotificationPreferenceComponent

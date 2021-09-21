@@ -4,7 +4,7 @@ import './index.css';
 // import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Notification from './Notification';
-import FetchNotificationApi from './component/FetchNotificationApi';
+// import FetchNotificationApi from './component/FetchNotificationApi';
 // import TaskMasterApi from './component/TaskMasterApi';
 
 ReactDOM.render(

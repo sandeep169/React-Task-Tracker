@@ -1,0 +1,80 @@
+useEffect(() => {
+        const fetchNotification = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/user_preference");
+                const data = await res.json();
+                let obj = {
+                    emailOrderUpdate: data.data[0].preferences["email-order-update"],
+                    emailInventoryUpdate: data.data[0].preferences["email-inventory-update"],
+                    emailReviewsUpdate: data.data[0].preferences["email-reviews-update"],
+                    organizationUpdate: data.data[0].preferences["organization-update"],
+                    shippingUpdate: data.data[0].preferences["shipping-update"],
+                }
+
+                setNotification(...notification,...obj)
+                // let data_values = Object.values(obj);
+                
+                // data.forEach(element => {
+                //     let data_length = data_values.length;
+                //     if (element === true) {
+                //      data_length = --data_length;  
+                //         console.log(data_length)
+                //         if (data_length === 0) {
+                //             setNotification({ ...notification, ...obj,allNotification:true});
+                //         }
+                //         else {
+                //             setNotification({ ...notification, ...obj});
+                //         }
+                //     }
+                // });
+
+                //overridong values or updating
+                //iterating over keys 
+                // Object.keys(data.data[0].preferences).forEach(key=>console.log(key));
+
+
+            } catch (error) {
+                console.log("error occured :", error);
+            }
+        }
+        fetchNotification();
+    }, [id])
+
+    //update notification
+    const updateNotification = {...notification}
+        console.log(updateNotification);
+        async function updateNotifications(){
+            const res = await fetch(`http://localhost:5000/user_preference`,{
+                method:'PUT',
+                headers:{
+                    'Content-type': 'application/json'
+                },
+                body:JSON.stringify(updateNotification)
+            })
+        }
+        
+        updateNotifications();
+
+        // const data = await res.json();
+        // setNotification(data);
+        // setNotification(...notification,...data);
+
+        const toggleNotifications = async (e) =>{
+            // setNotification({...notification})
+    
+            console.log(e);
+            // const toggle = await fetchNotfication();
+            // console.log("toggle fethcedNotfication:",toggle);
+            // console.log("toggle notfication :",notification);
+            // const updateNotification = {...notification,}
+            // const res = await fetch(`http://localhost:5000/user_preference`,{
+            //     method:'PUT',
+            //     headers:{
+            //         'Content-type': 'application/json'
+            //     },
+            //     body:JSON.stringify(updateNotification)
+            // })
+            // const data = await res.json();
+            // setNotification(data);
+            // setNotification(...notification,...data);
+        }
