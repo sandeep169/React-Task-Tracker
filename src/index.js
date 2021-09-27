@@ -9,7 +9,7 @@ import Notification from './Notification';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App /> */}
+    <App />
     <Notification/>
     {/* <TaskMasterApi /> */}
     {/* <FetchNotificationApi/> */}
