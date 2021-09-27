@@ -80,21 +80,21 @@ const NotificationPreferenceComponent = (id) => {
         console.log(obj);
 
         // send req to server to update key
-        const res = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                data: {
-                    user_id: id,
-                    preferences: {
-                        ...obj,
-                        res_key: obj[key]
-                    }
-                }
-            })
-        })
+        // const res = await fetch(url, {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         data: {
+        //             user_id: id,
+        //             preferences: {
+        //                 ...obj,
+        //                 res_key: obj[key]
+        //             }
+        //         }
+        //     })
+        // })
         // add kabab case keys object
         // ...camelToKabab({...notification,...obj})
         // jRes = await  res.json();

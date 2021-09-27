@@ -1,18 +1,15 @@
 {
   "user_preference": {
-    "status": "SUCCESS",
-    "message": "data fetched",
-    "data": [
-      {
-        "preferences": {
-          "shipping-update": true,
-          "email-order-update": true,
-          "organization-update": false,
-          "email-reviews-update": true,
-          "email-inventory-update": false
-        }
+    "data": {
+      "user_id": {},
+      "preferences": {
+        "shippingUpdate": true,
+        "emailOrderUpdate": true,
+        "emailReviewsUpdate": true,
+        "organizationUpdate": true,
+        "emailInventoryUpdate": true
       }
-    ]
+    }
   },
   "user_data": {
     "status": "SUCCESS",

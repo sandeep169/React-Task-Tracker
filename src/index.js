@@ -4,15 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Notification from './Notification';
+// import { router } from 'json-server';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 // import FetchNotificationApi from './component/FetchNotificationApi';
 // import TaskMasterApi from './component/TaskMasterApi';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <Notification/>
+    <Router>
+    <Link to='/notification' style={{textDecoration:'none', color: "orange"}}>NotificationAppComponent</Link>
+
+    <Route path='/' exact component={App} />
+    
+    <Route path='/notification' component={Notification} ></Route>
+    
     {/* <TaskMasterApi /> */}
     {/* <FetchNotificationApi/> */}
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
