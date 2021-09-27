@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Converstion from './Converstion';
 
 const NotificationPreferenceComponent = (id) => {
-    // const url = "users/(user_id)/user_app_preferences";
-    const url = "http://localhost:5000/user_preference"
+    // const url = "users/6/user_app_preferences";
+    const url= "http://localhost:5000/user_preference";
     const [notification, setNotification] = useState({
-        allNotification: false,
         shippingUpdate: true,
         emailOrderUpdate: true,
         emailReviewsUpdate: true,
@@ -13,7 +11,7 @@ const NotificationPreferenceComponent = (id) => {
         emailInventoryUpdate: true,
 
     });
-
+    const[allNotification, setAllNotification] = useState({allNotification:false})
 
     useEffect(() => {
         const fetchNotification = async () => {
@@ -27,10 +25,13 @@ const NotificationPreferenceComponent = (id) => {
                     organizationUpdate: data.data[0].preferences["organization-update"],
                     emailInventoryUpdate: data.data[0].preferences["email-inventory-update"],
                 }
-
+                console.log("data : ",data);
+                console.log("preference : ",data.data[0]);
                 setNotification({ ...notification, ...obj });
-                // setNotification({...kababToCamel( ...notification, ...obj )});
 
+                //iterating over keys 
+                // Object.keys(data.data[0].preferences).forEach(key=>console.log(key));
+                // console.log(data);
 
             } catch (error) {
                 console.log(error);
@@ -40,69 +41,60 @@ const NotificationPreferenceComponent = (id) => {
     }, [id])
 
 
-    const onChange = async (key, value) => {
-        console.log(key);
-
-        // setNotification
-        // Object.keys(data.data[0].preferences).forEach(key=>console.log(key));
-        let obj = {}
-        if (key === 'allNotification') {
-            if (value) {
-                obj.allNotification = true
-                obj.shippingUpdate = true
-                obj.emailOrderUpdate = true
-                obj.emailReviewsUpdate = true
-                obj.organizationUpdate = true
-                obj.emailInventoryUpdate = true
-            } else {
-                obj.allNotification = false
-                obj.shippingUpdate = false
-                obj.emailOrderUpdate = false
-                obj.emailReviewsUpdate = false
-                obj.organizationUpdate = false
-                obj.emailInventoryUpdate = false
-
-            }
-        } else {
-            obj[key] = value
-        }
-        setNotification({ ...notification, ...obj })
-        // TODO: change camel case keys to kabab case and send to server
-        // delete allNotificaion form obj
-        console.log(obj)
-        delete obj.allNotification;
-        let res_key = Converstion(key)
-        // delete obj[key];
-        // obj[resKey]=value;
-
-        // console.log("conversion key :",res_key);
-        // obj.res_key=value;
-        console.log(obj);
-
-        // send req to server to update key
-        const res = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                data: {
-                    user_id: id,
-                    preferences: {
-                        ...obj,
-                        res_key: obj[key]
-                    }
-                }
+    useEffect(() => {
+        console.log(allNotification);
+        setAllNotification(allNotification)
+        if (allNotification) {
+            setNotification({
+                ...notification,
+                shippingUpdate: true,
+                emailOrderUpdate: true,
+                emailReviewsUpdate: true,
+                organizationUpdate: true,
+                emailInventoryUpdate: true,                
             })
+        }
+        else {
+            setNotification({
+                ...notification,
+                shippingUpdate: false,
+                emailOrderUpdate: false,
+                emailReviewsUpdate: false,
+                organizationUpdate: false,
+                emailInventoryUpdate: false,
+            })
+        }
+        
+        // console.log(notification);
+        // fetch(url, {
+        //     method: 'PUT',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({...notification})
+        // })
+        // .then(response => response.json())
+        // .then(data => console.log(data));
+        
+ 
+
+    }, [allNotification])
+
+    useEffect(() =>{
+        setNotification({
+            ...notification,
+            shippingUpdate: notification.allNotification,
+            emailOrderUpdate: notification.allNotification,
+            emailReviewsUpdate: notification.allNotification,
+            organizationUpdate: notification.allNotification,
+            emailInventoryUpdate: notification.allNotification,                
         })
-        // add kabab case keys object
-        // ...camelToKabab({...notification,...obj})
-        // jRes = await  res.json();
-        // Jres.status ==="SUCCESS"
-        // TODO: check res, if success then okay, if error, show error and revert prefrence
-
-    }
-
+        fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({...notification})
+        })
+        .then(response => response.json())
+        .then(data => console.log(data));
+    },[notification])
 
     return (
         <>
@@ -117,10 +109,11 @@ const NotificationPreferenceComponent = (id) => {
                                         type="checkbox"
                                         className="custom-control-input"
                                         id="customSwitch1"
-                                        value={notification.allNotification}
-                                        checked={notification.allNotification}
-                                        // onChange={(e) => setNotification({ ...notification, allNotification: e.target.checked })}
-                                        onChange={(e) => onChange("allNotification", e.target.checked)}
+                                        // value={notification.allNotification}
+                                        // checked={notification.allNotification}
+                                        value={allNotification}
+                                        checked={allNotification}                            
+                                        onChange={(e) => setAllNotification({allNotification: e.target.checked })}
 
                                     />
                                     <label
@@ -143,8 +136,7 @@ const NotificationPreferenceComponent = (id) => {
                                                 id="customSwitch2-1"
                                                 value={notification.emailOrderUpdate}
                                                 checked={notification.emailOrderUpdate}
-                                                // onChange={(e) => setNotification({ ...notification, emailOrderUpdate: e.target.checked })}
-                                                onChange={(e) => onChange("emailOrderUpdate", e.target.checked)}
+                                                onChange={(e) => setNotification({ ...notification, emailOrderUpdate: e.target.checked })}
                                             />
                                             <label
                                                 className="custom-control-label"
@@ -163,8 +155,7 @@ const NotificationPreferenceComponent = (id) => {
                                                 id="customSwitch2-2"
                                                 value={notification.emailInventoryUpdate}
                                                 checked={notification.emailInventoryUpdate}
-                                                // onChange={(e) => setNotification({ ...notification, emailInventoryUpdate: e.target.checked })}
-                                                onChange={(e) => onChange("emailInventoryUpdate", e.target.checked)}
+                                                onChange={(e) => setNotification({ ...notification, emailInventoryUpdate: e.target.checked })}
                                             />
                                             <label
                                                 className="custom-control-label"
@@ -184,8 +175,7 @@ const NotificationPreferenceComponent = (id) => {
                                                 id="customSwitch2-3"
                                                 value={notification.emailReviewsUpdate}
                                                 checked={notification.emailReviewsUpdate}
-                                                // onChange={(e) => setNotification({ ...notification, emailReviewsUpdate: e.target.checked })}
-                                                onChange={(e) => onChange("emailReviewsUpdate", e.target.checked)}
+                                                onChange={(e) => setNotification({ ...notification, emailReviewsUpdate: e.target.checked })}
                                             />
                                             <label
                                                 className="custom-control-label"
@@ -206,8 +196,7 @@ const NotificationPreferenceComponent = (id) => {
                                         id="customSwitch3"
                                         value={notification.organizationUpdate}
                                         checked={notification.organizationUpdate}
-                                        // onChange={(e) => setNotification({ ...notification, organizationUpdate: e.target.checked })}
-                                        onChange={(e) => onChange("organizationUpdate", e.target.checked)}
+                                        onChange={(e) => setNotification({ ...notification, organizationUpdate: e.target.checked })}
                                     />
                                     <label
                                         className="custom-control-label"
@@ -226,8 +215,7 @@ const NotificationPreferenceComponent = (id) => {
                                         id="customSwitch4"
                                         value={notification.shippingUpdate}
                                         checked={notification.shippingUpdate}
-                                        // onChange={(e) => setNotification({ ...notification, shippingUpdate: e.target.checked })}
-                                        onChange={(e) => onChange("shippingUpdate", e.target.checked)}
+                                        onChange={(e) => setNotification({ ...notification, shippingUpdate: e.target.checked })}
                                     />
                                     <label
                                         className="custom-control-label"

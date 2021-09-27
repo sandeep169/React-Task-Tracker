@@ -1,5 +1,14 @@
 {
   "user_preference": {
+    "data": {
+      "user_id": {},
+      "preferences": {
+        "emailInventoryUpdate": true,
+        "res_key": true
+      }
+    }
+  },
+  "user_data": {
     "status": "SUCCESS",
     "message": "data fetched",
     "data": [

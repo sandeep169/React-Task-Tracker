@@ -1,0 +1,7 @@
+
+*do not send the all notfication as it is not declared in the server
+data send with kebab case
+if option is selected all notficaton then update the state then delete the all notfication from object
+
+so for now  if other then all notfication is selected so that value with kebab case key is sent
+but when selecting the all notfication a new  key value is added
