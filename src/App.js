@@ -99,7 +99,7 @@ function App() {
   return (
     // <>
     <Router>
-      <Link to='/notification' style={{textDecoration:'none', color: "orange"}}>NotificationAppComponent</Link>
+     
       <div className="container">
         {/* <Header ></Header> */}
         <Header title={"Task Tracker"} onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}></Header>
